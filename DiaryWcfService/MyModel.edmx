@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DiaryDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="DiaryDatabaseModelStoreContainer">
+          <EntitySet Name="DailyNotes" EntityType="DiaryDatabaseModel.Store.DailyNotes" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="DiaryDatabaseModel.Store.User" store:Type="Tables" />
+          <AssociationSet Name="User_fk" Association="DiaryDatabaseModel.Store.User_fk">
+            <End Role="User" EntitySet="User" />
+            <End Role="DailyNotes" EntitySet="DailyNotes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DailyNotes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="nvarchar" MaxLength="500" />
+          <Property Name="User" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <Association Name="User_fk">
+          <End Role="User" Type="DiaryDatabaseModel.Store.User" Multiplicity="1" />
+          <End Role="DailyNotes" Type="DiaryDatabaseModel.Store.DailyNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="DailyNotes">
+              <PropertyRef Name="User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DiaryDatabaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DiaryDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DailyNotes" EntityType="DiaryDatabaseModel.DailyNotes" />
+          <EntitySet Name="User" EntityType="DiaryDatabaseModel.User" />
+          <AssociationSet Name="User_fk" Association="DiaryDatabaseModel.User_fk">
+            <End Role="User" EntitySet="User" />
+            <End Role="DailyNotes" EntitySet="DailyNotes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DailyNotes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="User" Relationship="DiaryDatabaseModel.User_fk" FromRole="DailyNotes" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="DailyNotes" Relationship="DiaryDatabaseModel.User_fk" FromRole="User" ToRole="DailyNotes" />
+        </EntityType>
+        <Association Name="User_fk">
+          <End Role="User" Type="DiaryDatabaseModel.User" Multiplicity="1" />
+          <End Role="DailyNotes" Type="DiaryDatabaseModel.DailyNotes" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DiaryDatabaseModelStoreContainer" CdmEntityContainer="DiaryDatabaseEntities">
+          <EntitySetMapping Name="DailyNotes">
+            <EntityTypeMapping TypeName="DiaryDatabaseModel.DailyNotes">
+              <MappingFragment StoreEntitySet="DailyNotes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="DiaryDatabaseModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="User_fk" TypeName="DiaryDatabaseModel.User_fk" StoreEntitySet="DailyNotes">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Guid" ColumnName="User" />
+            </EndProperty>
+            <EndProperty Name="DailyNotes">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
