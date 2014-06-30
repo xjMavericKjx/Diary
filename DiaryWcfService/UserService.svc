@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="DiaryWcfService.DailyService" CodeBehind="UserService.svc.cs" %>
