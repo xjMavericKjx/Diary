@@ -83,12 +83,16 @@
     <Content Include="App_Data\DiaryDatabase.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Service.svc" />
+    <Content Include="UserService.svc" />
+    <Content Include="DailyService.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ApiHelper.cs" />
     <Compile Include="Classes\ReturnPackage.cs" />
+    <Compile Include="UserService.svc.cs">
+      <DependentUpon>UserService.svc</DependentUpon>
+    </Compile>
     <Compile Include="DailyNotes.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -107,8 +111,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Service.svc.cs">
-      <DependentUpon>Service.svc</DependentUpon>
+    <Compile Include="DailyService.svc.cs">
+      <DependentUpon>DailyService.svc</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs">
